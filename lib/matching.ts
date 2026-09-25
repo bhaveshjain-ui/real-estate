@@ -76,6 +76,10 @@ function round(n: number): number {
   return Math.round(n);
 }
 
+function formatINR(n: number): string {
+  return n.toLocaleString("en-IN");
+}
+
 function preferenceSatisfied(
   attribute: PreferenceAttribute,
   listing: Listing
@@ -271,10 +275,10 @@ function buildPersonBreakdown(
   const preferenceScore = possible > 0 ? earned / possible : 1;
 
   const share = rent.perMemberShare[member.memberId];
-  const rentNote = `Pays ₹${share} of her ₹${member.hardConstraints.maxRent} max`;
+  const rentNote = `Pays ₹${formatINR(share)} of her ₹${formatINR(member.hardConstraints.maxRent)} max`;
   if (rent.usesUnequalSplit && share > round(rent.equalShare)) {
     compromises.push(
-      `${rentNote} (more than an equal ₹${round(rent.equalShare)} split)`
+      `${rentNote} (more than an equal ₹${formatINR(round(rent.equalShare))} split)`
     );
   } else {
     gets.push(rentNote);
